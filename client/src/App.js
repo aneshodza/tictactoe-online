@@ -32,7 +32,9 @@ function App() {
 
   return (
     <div id="playing">
-      <span className="player-notation">You are <span id={`player-${player}`}>player {player}</span></span>
+      <span className="player-notation">You are
+        <span id={`player-${player}`}>{player === 3 ? ' spectating' : ` player ${player}`}</span>
+      </span>
       <div className="resize-helper">
         <div className="outer-container">
           {squares.map((square) => 

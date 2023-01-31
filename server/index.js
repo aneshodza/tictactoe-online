@@ -51,9 +51,16 @@ http.listen(port, () => {
 app.post('/move', (req, res) => {
     lobby.play(req.body.uid, req.body.move);
     console.log(lobby);
-    let tempLobby = lobby;
+    let tempLobby = {...lobby};
     tempLobby.p1 = undefined;
     tempLobby.p2 = undefined;
     io.emit('move', tempLobby);
+})
+
+app.get('/lobby', (req, res) => {
+    let tempLobby = {...lobby};
+    tempLobby.p1 = undefined;
+    tempLobby.p2 = undefined;
+    res.send(tempLobby);
 })
 

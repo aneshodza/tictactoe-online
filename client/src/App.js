@@ -23,14 +23,24 @@ function App() {
       setPlayer(data.player);
     })
     socket.on('move', (data) => {
-      console.log(data);
       setTurn(data.turn);
       let tempSquares = squares;
-      data.field.forEach((value, index) => {
-        tempSquares[index].value = value;
+      data.field.forEach((field, index) => {
+        tempSquares[index].value = field.value;
       });
       setSquares([...tempSquares]);
     })
+
+    fetch(ENDPOINT + '/lobby')
+      .then((response) => response.json())
+      .then((data) => {
+        setTurn(data.turn);
+        let tempSquares = squares;
+        data.field.forEach((field, index) => {
+          tempSquares[index].value = field.value;
+        });
+        setSquares([...tempSquares]);
+      })
   }, []);
 
   const clickHandler = (id) => {

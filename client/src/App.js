@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import socketIO from 'socket.io-client';
 
 const ENDPOINT = 'http://localhost:3001';
-const socket = socketIO.connect(ENDPOINT);
 
 function App() {
   const [player, setPlayer] = useState(1);
@@ -16,6 +15,13 @@ function App() {
   }));
 
   useEffect(() => {
+    if (sessionStorage.getItem('uid') === null) {
+      sessionStorage.setItem('uid', Math.floor(Math.random() * 1000000000000000));
+    }
+    const socket = socketIO.connect(ENDPOINT, {query: 'uid=' + sessionStorage.getItem('uid')});
+    socket.on('joined', (data) => {
+      setPlayer(data.player);
+    })
   }, []);
 
   const clickHandler = (id) => {

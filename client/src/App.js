@@ -1,23 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react';
 
 function App() {
+  const [player, setPlayer] = useState(1);
+  const [squares, setSquares] = useState(Array.from({length: 9}, (elm, index) => {
+    return {
+      id: index,
+      value: 0,
+      element: <div className="square" onClick={() => clickHandler(index)}></div>
+    }
+  }));
+
+  useEffect(() => {
+    console.log(squares);
+  }, []);
+
+  const clickHandler = (id) => {
+    let newSquares = squares;
+    newSquares[id].value = player;
+    setSquares([...newSquares]);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id="playing">
+      <span className="player-notation">You are <span id={`player-${player}`}>player {player}</span></span>
+      <div className="resize-helper">
+        <div className="outer-container">
+          {squares.map((square) => 
+            <div className={`player-${square.value} square`} onClick={() => clickHandler(square.id)}></div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

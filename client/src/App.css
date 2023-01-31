@@ -1,38 +1,162 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+:root {
+  --red: hsl(0, 100%, 70%);
+  --red-shadow: hsl(0, 100%, 40%);
+  --green: hsl(150, 100%, 70%);
+  --green-shadow: hsl(166, 100%, 34%);
+  --grey: hsl(0, 0%, 78%);
+  --grey-shadow: hsl(0, 0%, 50%);
+  --font-color: hsl(0, 0%, 23%);
 }
 
-.App-logo {
-  height: 40vmin;
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  transition: all 0.2s ease-in-out;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body#player-1 {
+  background-color: var(--green);
+}
+
+body#player-2 {
+  background-color: var(--red);
+}
+
+body#draw {
+  background-color: var(--grey);
+}
+
+body#player-1 div.resize-helper,
+body#player-2 div.resize-helper,
+body#draw div.resize-helper {
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.player-notation {
+  width: 100%;
+  display: block;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: var(--font-color);
+  text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.player-notation #player-1 {
+  color: var(--green);
+}
+
+.player-notation #player-2 {
+  color: var(--red);
+}
+
+div.resize-helper {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  width: 80vw;
+  max-width: 80vh;
+}
+
+div.outer-container {
+  padding: 20px;
+  border-radius: 5%;
+  box-shadow: 0 0 15px 0 var(--grey);
+  display: grid;
+  aspect-ratio: 1;
+  width: 100%;
+  max-width: 450px;
+  grid-template-columns: 30% 30% 30%;
+  grid-template-rows: 30% 30% 30%;
+  column-gap: 5%;
+  row-gap: 5%;
+  background-color: white;
+}
+
+div.outer-container div {
+  box-shadow: inset 0 0 5px 0 var(--grey);
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border-radius: 10%;
+  transition: all 0.5s ease-in-out;
+}
+
+div.outer-container div:hover {
+  box-shadow: inset 0 0 15px 0 var(--grey);
+}
+
+div.outer-container div.player-1 {
+  background-color: var(--green);
+  box-shadow: inset 0 0 8px 0 var(--green-shadow);
+}
+
+div.outer-container div.player-2 {
+  background-color: var(--red);
+  box-shadow: inset 0 0 8px 0 var(--red-shadow);
+}
+
+div.buttons-resize-helper {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+  max-width: 80vh;
+}
+
+div.buttons {
+  width: 100%;
+  max-width: 490px;
+  top: 100px;
+  display: flex;
+  flex-direction: row;
+}
+
+button {
+  font-family: 'Montserrat', sans-serif;
+  border: none;
+  color: var(--font-color);
+  background-color: white;
+  font-size: 24px;
+  border-radius: 5px;
+  padding: 5px;
+  transition: all 0.2s ease-in-out;
+}
+
+body#player-1 button {
+  background-color: var(--green);
+}
+
+body#player-1 button:hover {
+  box-shadow: 0 0 10px 0 var(--green-shadow);
+}
+
+body#player-2 button {
+  background-color: var(--red);
+}
+
+body#player-2 button:hover {
+  box-shadow: 0 0 10px 0 var(--red-shadow);
+}
+
+body#draw button {
+  background-color: var(--grey);
+}
+
+body:not(#playing) button {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button:hover {
+  box-shadow: 0 0 10px 0 var(--grey-shadow);
+  scale: 1.025;
+  cursor: pointer;
 }

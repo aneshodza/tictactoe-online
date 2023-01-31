@@ -1,5 +1,9 @@
 import './App.css';
 import { useState, useEffect } from 'react';
+import socketIO from 'socket.io-client';
+
+const ENDPOINT = 'http://localhost:3001';
+const socket = socketIO.connect(ENDPOINT);
 
 function App() {
   const [player, setPlayer] = useState(1);
@@ -12,7 +16,6 @@ function App() {
   }));
 
   useEffect(() => {
-    console.log(squares);
   }, []);
 
   const clickHandler = (id) => {
@@ -27,7 +30,7 @@ function App() {
       <div className="resize-helper">
         <div className="outer-container">
           {squares.map((square) => 
-            <div className={`player-${square.value} square`} onClick={() => clickHandler(square.id)}></div>
+            <div key={square.id} className={`player-${square.value} square`} onClick={() => clickHandler(square.id)}></div>
           )}
         </div>
       </div>

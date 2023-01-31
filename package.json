@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "scripts": {
+    "start": "concurrently \"node server/index.js\" \"npm run client\"",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "install": "cd client && npm install",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  }
+}

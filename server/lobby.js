@@ -6,6 +6,7 @@ class Lobby {
         this.p2 = null;
         this.started = false;
         this.finished = false;
+        this.turn = 1;
     }
 
     isFull() {
@@ -26,6 +27,19 @@ class Lobby {
         }
         this.p2 = new User(p2, socket_id);
         this.started = true;
+        return true;
+    }
+
+    play(uid, move) {
+        if (!this.started || this.finished) {
+            return false;
+        } else if (this.turn === 1 && uid !== this.p1.uid) {
+            return false;
+        } else if (this.turn === 2 && uid !== this.p2.uid) {
+            return false;
+        }
+
+        this.turn = this.turn + 1 % 2;
         return true;
     }
 }

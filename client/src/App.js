@@ -5,8 +5,9 @@ import socketIO from 'socket.io-client';
 const ENDPOINT = 'http://localhost:3001';
 
 function App() {
-  const [player, setPlayer] = useState(1);
-  const [squares, setSquares] = useState(Array.from({length: 9}, (elm, index) => {
+  const [player, setPlayer] = useState(3);
+  const [turn, setTurn] = useState(1);
+  const [squares, setSquares] = useState(Array.from({length: 9}, (_, index) => {
     return {
       id: index,
       value: 0,
@@ -25,9 +26,22 @@ function App() {
   }, []);
 
   const clickHandler = (id) => {
+    if (turn !== player) {
+      return;
+    }
     let newSquares = squares;
     newSquares[id].value = player;
     setSquares([...newSquares]);
+    fetch(ENDPOINT + '/move', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        uid: sessionStorage.getItem('uid'),
+        move: id
+      })
+    })
   }
 
   return (

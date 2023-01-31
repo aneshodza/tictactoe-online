@@ -1,0 +1,33 @@
+const User = require('./user');
+
+class Lobby {
+    initialize(p1, socket_id) {
+        this.p1 = new User(p1, socket_id);
+        this.p2 = null;
+        this.started = false;
+        this.finished = false;
+    }
+
+    isFull() {
+        return this.p2 !== null;
+    }
+
+    join(p2, socket_id) {
+        if (p2 === this.p1.uid) {
+            this.p1.updateSocket(socket_id);
+            return false;
+        } else if (this.p2 && p2 === this.p2.uid) {
+            this.p2.updateSocket(socket_id);
+            return false;
+        }
+
+        if (this.isFull()) {
+            return false;
+        }
+        this.p2 = new User(p2, socket_id);
+        this.started = true;
+        return true;
+    }
+}
+
+module.exports = Lobby;

@@ -33,8 +33,17 @@ io.on('connection', (socket) => {
         socket.emit('joined', {player: 1});
     } else {
         lobby.join(socket.handshake.query.uid, socket.id);
+        let player;
+        if (lobby.p1.uid === socket.handshake.query.uid) {
+            player = 1;
+        } else if (lobby.p2 && lobby.p2.uid === socket.handshake.query.uid) {
+            player = 2;
+        } else {
+            player = 3;
+        }
+
         socket.emit('joined', {
-            player: lobby.p1.uid === socket.handshake.query.uid ? 1 : 2
+            player: player
         });
     }
 });

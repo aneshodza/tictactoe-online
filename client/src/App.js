@@ -10,8 +10,7 @@ function App() {
   const [squares, setSquares] = useState(Array.from({length: 9}, (_, index) => {
     return {
       id: index,
-      value: 0,
-      element: <div className="square" onClick={() => clickHandler(index)}></div>
+      value: 0
     }
   }));
 
@@ -22,6 +21,15 @@ function App() {
     const socket = socketIO.connect(ENDPOINT, {query: 'uid=' + sessionStorage.getItem('uid')});
     socket.on('joined', (data) => {
       setPlayer(data.player);
+    })
+    socket.on('move', (data) => {
+      console.log(data);
+      setTurn(data.turn);
+      let tempSquares = squares;
+      data.field.forEach((value, index) => {
+        tempSquares[index].value = value;
+      });
+      setSquares([...tempSquares]);
     })
   }, []);
 

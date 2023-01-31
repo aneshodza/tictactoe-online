@@ -22,10 +22,7 @@ io.on('connection', (socket) => {
     if (socket.handshake.query.uid === undefined) {
         socket.disconnect();
     }
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-    });
-    console.log(lobby)
+
     if (lobby === undefined) {
         lobby = new Lobby();
         lobby.initialize(socket.handshake.query.uid, socket.id);
@@ -52,8 +49,11 @@ http.listen(port, () => {
 });
 
 app.post('/move', (req, res) => {
-    console.log(req.body);
-    console.log(lobby.play(req.body.uid, req.body.move));
-    res.send('ok');
+    lobby.play(req.body.uid, req.body.move);
+    console.log(lobby);
+    let tempLobby = lobby;
+    tempLobby.p1 = undefined;
+    tempLobby.p2 = undefined;
+    io.emit('move', tempLobby);
 })
 

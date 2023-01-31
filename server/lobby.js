@@ -7,6 +7,7 @@ class Lobby {
         this.started = false;
         this.finished = false;
         this.turn = 1;
+        this.field = Array.from({length: 9}, (_, index) => ({id: index, value: 0}));
     }
 
     isFull() {
@@ -39,6 +40,7 @@ class Lobby {
             return false;
         }
 
+        this.field[move].value = this.turn;
         this.turn = this.turn + 1 % 2;
         return true;
     }

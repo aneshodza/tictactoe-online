@@ -19,7 +19,6 @@ const io = require('socket.io')(http, {
 let lobby = undefined;
 
 io.on('connection', (socket) => {
-    console.log(socket.handshake.query.uid);
     if (socket.handshake.query.uid === undefined) {
         socket.disconnect();
     }
@@ -51,3 +50,10 @@ io.on('connection', (socket) => {
 http.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);
 });
+
+app.post('/move', (req, res) => {
+    console.log(req.body);
+    console.log(lobby.play(req.body.uid, req.body.move));
+    res.send('ok');
+})
+

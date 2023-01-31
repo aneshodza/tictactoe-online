@@ -10,8 +10,7 @@ function App() {
   const [squares, setSquares] = useState(Array.from({length: 9}, (_, index) => {
     return {
       id: index,
-      value: 0,
-      element: <div className="square" onClick={() => clickHandler(index)}></div>
+      value: 0
     }
   }));
 
@@ -23,6 +22,25 @@ function App() {
     socket.on('joined', (data) => {
       setPlayer(data.player);
     })
+    socket.on('move', (data) => {
+      setTurn(data.turn);
+      let tempSquares = squares;
+      data.field.forEach((field, index) => {
+        tempSquares[index].value = field.value;
+      });
+      setSquares([...tempSquares]);
+    })
+
+    fetch(ENDPOINT + '/lobby')
+      .then((response) => response.json())
+      .then((data) => {
+        setTurn(data.turn);
+        let tempSquares = squares;
+        data.field.forEach((field, index) => {
+          tempSquares[index].value = field.value;
+        });
+        setSquares([...tempSquares]);
+      })
   }, []);
 
   const clickHandler = (id) => {

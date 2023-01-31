@@ -7,6 +7,7 @@ class Lobby {
         this.started = false;
         this.finished = false;
         this.turn = 1;
+        this.field = Array.from({length: 9}, (_, index) => ({id: index, value: 0}));
     }
 
     isFull() {
@@ -31,6 +32,7 @@ class Lobby {
     }
 
     play(uid, move) {
+        console.log(this.p1, this.p2);
         if (!this.started || this.finished) {
             return false;
         } else if (this.turn === 1 && uid !== this.p1.uid) {
@@ -39,7 +41,8 @@ class Lobby {
             return false;
         }
 
-        this.turn = this.turn + 1 % 2;
+        this.field[move].value = this.turn;
+        this.turn = this.turn === 1 ? 2 : 1;
         return true;
     }
 }

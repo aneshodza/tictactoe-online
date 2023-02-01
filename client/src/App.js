@@ -2,7 +2,7 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import socketIO from 'socket.io-client';
 
-const ENDPOINT = 'http://localhost:3001';
+const ENDPOINT = process.env.SERVER_URL || 'http://localhost:3001';
 
 function App() {
   const [player, setPlayer] = useState(3);

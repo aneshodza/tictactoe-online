@@ -36,9 +36,11 @@ function App() {
       .then((data) => {
         setTurn(data.turn);
         let tempSquares = squares;
-        data.field.forEach((field, index) => {
-          tempSquares[index].value = field.value;
-        });
+        if (data.field) {
+          data.field.forEach((field, index) => {
+            tempSquares[index].value = field.value;
+          });
+        }
         setSquares([...tempSquares]);
       })
   }, []);
@@ -70,7 +72,12 @@ function App() {
       <div className="resize-helper">
         <div className="outer-container">
           {squares.map((square) => 
-            <div key={square.id} className={`player-${square.value} square`} onClick={() => clickHandler(square.id)}></div>
+            <div 
+              key={square.id}
+              className={`player-${square.value} square`}
+              onClick={() => clickHandler(square.id)}
+              id={`square-${square.id}`}>
+            </div>
           )}
         </div>
       </div>

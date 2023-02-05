@@ -32,10 +32,7 @@ class Lobby {
     }
 
     play(uid, move) {
-        console.log(this.p1, this.p2);
-        if (!this.started || this.finished) {
-            return false;
-        } else if (this.turn === 1 && uid !== this.p1.uid) {
+        if (this.turn === 1 && uid !== this.p1.uid) {
             return false;
         } else if (this.turn === 2 && uid !== this.p2.uid) {
             return false;

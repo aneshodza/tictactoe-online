@@ -1,0 +1,20 @@
+describe('visiting /', () => {
+  let p1 = 0;
+  it('should join the lobby as player 1', () => {
+    cy.visit('http://localhost:3000');
+    p1 = cy.getSessionStorage('uid');
+    cy.log('something');
+    cy.log(p1);
+    cy.get('#player-1').should('contain', 'player 1');
+  });
+
+  it('should join the lobby as player 2', () => {
+    cy.visit('http://localhost:3000');
+    cy.get('#player-2').should('contain', 'player 2');
+  });
+
+  it('should join the lobby as a spectator', () => {
+    cy.visit('http://localhost:3000');
+    cy.get('#player-3').should('contain', 'spectating');
+  });
+});

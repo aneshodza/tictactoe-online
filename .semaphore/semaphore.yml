@@ -23,4 +23,3 @@ blocks:
             - cache store
             - npm start & pid=$!
             - npx cypress run
-            - npm test

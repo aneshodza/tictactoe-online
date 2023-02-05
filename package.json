@@ -3,10 +3,16 @@
     "concurrently": "^7.6.0"
   },
   "scripts": {
-    "start": "concurrently \"node server/index.js\" \"npm run client\"",
+    "start": "concurrently \"node server/index.js\" \"BROWSER=none npm run client\"",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "install": "cd client && npm install",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "test": "npx cypress run",
+    "test:semaphore": "npm start & pid=$!; npx cypress run; exit_code=$?; exit $exit_code"
+  },
+  "devDependencies": {
+    "cypress": "^12.5.1",
+    "cypress-localstorage-commands": "^2.2.2"
   }
 }

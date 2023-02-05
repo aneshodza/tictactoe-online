@@ -30,4 +30,15 @@ describe('visiting /', () => {
     cy.get('#square-0').click();
     cy.get('#square-0').should('have.class', 'player-1');
   });
+
+  it('cant move twice in a row', () => {
+    cy.visit('http://localhost:3000');
+    cy.window().its('sessionStorage').invoke('setItem', 'uid', p1);
+    cy.reload();
+    cy.get('#player-1').should('contain', 'player 1');
+    cy.get('#square-0').click();
+    cy.get('#square-0').should('have.class', 'player-1');
+    cy.get('#square-1').click();
+    cy.get('#square-1').should('not.have.class', 'player-1');
+  });
 });

@@ -13,13 +13,11 @@ blocks:
           commands:
             - checkout
             - sem-version node 16
-            - cache restore
             - npm install
             - cd client
             - npm i
             - cd ../server
             - npm i
             - cd ..
-            - cache store
             - npm start & pid=$!
             - npx cypress run

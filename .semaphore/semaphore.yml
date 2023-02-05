@@ -1,0 +1,23 @@
+version: v1.0
+name: tictactoe-online
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
+
+blocks:
+  - name: Test
+    task:
+      jobs:
+        - name: Test
+          commands:
+            - checkout
+            - sem-version node 16
+            - npm install
+            - cd client
+            - npm i
+            - cd ../server
+            - npm i
+            - cd ..
+            - npm start & pid=$!
+            - npx cypress run

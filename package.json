@@ -9,7 +9,7 @@
     "install": "cd client && npm install",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "test": "npx cypress run",
-    "test:semaphore": "npm start & pid=$!; npx cypress run; exit_code=$?; kill $pid; exit $exit_code"
+    "test:semaphore": "npm start & pid=$!; npx cypress run; exit_code=$?; exit $exit_code"
   },
   "devDependencies": {
     "cypress": "^12.5.1",

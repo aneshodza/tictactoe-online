@@ -8,7 +8,8 @@
     "client": "npm start --prefix client",
     "install": "cd client && npm install",
     "heroku-postbuild": "cd client && npm install && npm run build",
-    "test": "npx cypress run"
+    "test": "npx cypress run",
+    "test:semaphore": "npm start & pid=$!; npx cypress run; exit_code=$?; kill $pid; exit $exit_code"
   },
   "devDependencies": {
     "cypress": "^12.5.1",

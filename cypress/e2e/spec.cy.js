@@ -31,7 +31,7 @@ describe('visiting /', () => {
   });
 
   it('can make a move as player 1', () => {
-    // cy.joinAsPlayer(p1);
+    cy.joinAsPlayer(p1);
     cy.get('#player-1').should('contain', 'player 1');
     cy.get('#square-0').click();
     cy.get('#square-0').should('have.class', 'player-1');

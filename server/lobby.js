@@ -6,6 +6,7 @@ class Lobby {
         this.p2 = null;
         this.started = false;
         this.finished = false;
+        this.whoWon = 0;
         this.turn = 1;
         this.field = Array.from({length: 9}, (_, index) => ({id: index, value: 0}));
     }
@@ -58,10 +59,23 @@ class Lobby {
         } else if (this.turn === 2 && uid !== this.p2.uid) {
             return false;
         }
-
+        
         this.field[move].value = this.turn;
         this.turn = this.turn === 1 ? 2 : 1;
         return true;
+    }
+
+    checkWin(whoMoved) {
+        const winConditions = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
     }
 }
 

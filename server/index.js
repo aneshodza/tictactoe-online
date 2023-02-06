@@ -31,9 +31,11 @@ io.on('connection', (socket) => {
     } else {
         lobby.join(socket.handshake.query.uid, socket.id);
         let player;
-        if (lobby.p1.uid === socket.handshake.query.uid) {
+        if (lobby.p1.uid === socket.handshake.query.uid
+            || socket.handshake.query.uid === 'p1') {
             player = 1;
-        } else if (lobby.p2 && lobby.p2.uid === socket.handshake.query.uid) {
+        } else if (lobby.p2 && lobby.p2.uid === socket.handshake.query.uid
+            || socket.handshake.query.uid === 'p2') {
             player = 2;
         } else {
             player = 3;

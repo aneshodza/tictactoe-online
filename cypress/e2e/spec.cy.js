@@ -13,16 +13,16 @@ describe('visiting /', () => {
     cy.visit('http://localhost:3000');
     cy.window().its('sessionStorage').invoke('getItem', 'uid').then((uid) => {
       p1 = uid;
+      cy.get('#player-1').should('contain', 'player 1');
     });
-    cy.get('#player-1').should('contain', 'player 1');
   });
 
   it('should join the lobby as player 2', () => {
     cy.visit('http://localhost:3000');
     cy.window().its('sessionStorage').invoke('getItem', 'uid').then((uid) => {
       p2 = uid;
+      cy.get('#player-2').should('contain', 'player 2');
     });
-    cy.get('#player-2').should('contain', 'player 2');
   });
 
   it('should join the lobby as a spectator', () => {
@@ -31,7 +31,7 @@ describe('visiting /', () => {
   });
 
   it('can make a move as player 1', () => {
-    cy.joinAsPlayer(p1);
+    // cy.joinAsPlayer(p1);
     cy.get('#player-1').should('contain', 'player 1');
     cy.get('#square-0').click();
     cy.get('#square-0').should('have.class', 'player-1');

@@ -19,7 +19,8 @@ const io = require('socket.io')(http, {
 let lobby = undefined;
 
 io.on('connection', (socket) => {
-    if (socket.handshake.query.uid === undefined) {
+    if (socket.handshake.query.uid === undefined
+        || socket.handshake.query.uid === null) {
         socket.disconnect();
     }
 

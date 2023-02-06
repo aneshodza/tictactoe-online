@@ -3,7 +3,8 @@
     "concurrently": "^7.6.0"
   },
   "scripts": {
-    "start": "concurrently \"node server/index.js\" \"BROWSER=none npm run client\"",
+    "start": "concurrently \"node server/index.js ENV=prod\" \"BROWSER=none npm run client\"",
+    "start:testenv": "concurrently \"node server/index.js ENV=test\" \"BROWSER=none npm run client\"",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "install": "cd client && npm install",

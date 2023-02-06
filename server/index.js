@@ -19,7 +19,8 @@ const io = require('socket.io')(http, {
 let lobby = undefined;
 
 io.on('connection', (socket) => {
-    if (socket.handshake.query.uid === undefined) {
+    if (socket.handshake.query.uid === undefined
+        || socket.handshake.query.uid === null) {
         socket.disconnect();
     }
 
@@ -30,9 +31,11 @@ io.on('connection', (socket) => {
     } else {
         lobby.join(socket.handshake.query.uid, socket.id);
         let player;
-        if (lobby.p1.uid === socket.handshake.query.uid) {
+        if (lobby.p1.uid === socket.handshake.query.uid
+            || socket.handshake.query.uid === 'p1') {
             player = 1;
-        } else if (lobby.p2 && lobby.p2.uid === socket.handshake.query.uid) {
+        } else if (lobby.p2 && lobby.p2.uid === socket.handshake.query.uid
+            || socket.handshake.query.uid === 'p2') {
             player = 2;
         } else {
             player = 3;
@@ -50,6 +53,10 @@ http.listen(port, () => {
 
 app.post('/move', (req, res) => {
     lobby.play(req.body.uid, req.body.move);
+    if (lobby.checkWin(lobby.turn === 1 ? 2 : 1)) {
+        lobby.finished = true;
+        lobby.whoWon = lobby.turn === 1 ? 2 : 1;
+    }
     let tempLobby = {...lobby};
     tempLobby.p1 = undefined;
     tempLobby.p2 = undefined;

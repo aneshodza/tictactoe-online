@@ -61,18 +61,20 @@ describe('visiting /', () => {
     cy.get('#square-1').should('have.class', 'player-2');
   });
 
-//   it('should allow p1 to win', () => {
-//     cy.joinAsPlayer('p1');
-//     cy.get('#player-1').should('contain', 'player 1');
-//     cy.get('#square-0').should('have.class', 'player-1');
-//     cy.get('#square-3').click();
-//     cy.get('#square-3').should('have.class', 'player-1');
-//     cy.joinAsPlayer('p2');
-//     cy.get('#square-2').click();
-//     cy.get('#square-2').should('have.class', 'player-2');
-//     cy.joinAsPlayer('p1');
-//     cy.get('#square-6').click();
-//     cy.get('#square-6').should('have.class', 'player-1');
-//     cy.get('body').should('have.id', 'player-1');
-//   });
+  it('should allow p1 to win', () => {
+    cy.joinAsPlayer('p1');
+    cy.get('#player-1').should('contain', 'player 1');
+    cy.get('#square-0').should('have.class', 'player-1');
+    cy.get('#square-3').click();
+    cy.get('#square-3').should('have.class', 'player-1');
+    cy.joinAsPlayer('p2');
+    cy.get('#square-3').should('have.class', 'player-1');
+    cy.get('#square-2').click();
+    cy.get('#square-2').should('have.class', 'player-2');
+    cy.joinAsPlayer('p1');
+    cy.get('#square-2').should('have.class', 'player-2');
+    cy.get('#square-6').click();
+    cy.get('#square-6').should('have.class', 'player-1');
+    cy.get('div#playing').should('have.class', 'player-1');
+  });
 });

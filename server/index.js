@@ -53,6 +53,7 @@ http.listen(port, () => {
 
 app.post('/move', (req, res) => {
     lobby.play(req.body.uid, req.body.move);
+    lobby.checkWin(lobby.turn === 1 ? 2 : 1)
     let tempLobby = {...lobby};
     tempLobby.p1 = undefined;
     tempLobby.p2 = undefined;

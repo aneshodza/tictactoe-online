@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import socketIO from 'socket.io-client';
 
 const ENDPOINT = process.env.SERVER_URL || 'http://localhost:3001';
@@ -14,6 +14,8 @@ function App() {
     }
   }));
 
+  const gameWrapper = useRef(null)
+
   useEffect(() => {
     if (sessionStorage.getItem('uid') === null) {
       sessionStorage.setItem('uid', Math.floor(Math.random() * 1000000000000000));
@@ -23,6 +25,9 @@ function App() {
       setPlayer(data.player);
     })
     socket.on('move', (data) => {
+      if (data.finished) {
+        gameWrapper.current.classList.add(`player-${data.whoWon}`)
+      }
       setTurn(data.turn);
       let tempSquares = squares;
       data.field.forEach((field, index) => {
@@ -40,6 +45,9 @@ function App() {
           data.field.forEach((field, index) => {
             tempSquares[index].value = field.value;
           });
+        }
+        if (data.finished) {
+          gameWrapper.current.classList.add(`player-${data.whoWon}`)
         }
         setSquares([...tempSquares]);
       })
@@ -65,7 +73,7 @@ function App() {
   }
 
   return (
-    <div id="playing">
+    <div id="playing" ref={gameWrapper}>
       <span className="player-notation">You are
         <span id={`player-${player}`}>{player === 3 ? ' spectating' : ` player ${player}`}</span>
       </span>

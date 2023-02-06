@@ -76,6 +76,20 @@ class Lobby {
             [0, 4, 8],
             [2, 4, 6]
         ];
+        let tempField = [...this.field]
+        tempField = tempField.filter(square => square.value === whoMoved)
+        let fieldIds = []
+        tempField.forEach(square => {
+            fieldIds.push(square.id)
+        })
+        for (let i = 0; i < winConditions.length; i++) {
+            if(winConditions[i].filter(id => fieldIds.includes(id)).length === 3) {
+                this.finished = true;
+                this.whoWon = whoMoved
+                return true
+            }
+        }
+        return false
     }
 }
 

@@ -22,21 +22,30 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-body#player-1 {
+#playing {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#playing.player-1 {
   background-color: var(--green);
 }
 
-body#player-2 {
+#playing.player-2 {
   background-color: var(--red);
 }
 
-body#draw {
+#playing.draw {
   background-color: var(--grey);
 }
 
-body#player-1 div.resize-helper,
-body#player-2 div.resize-helper,
-body#draw div.resize-helper {
+#playing.player-1 div.resize-helper,
+#playing.player-2 div.resize-helper,
+#playing.draw div.resize-helper {
   pointer-events: none;
 }
 
@@ -49,11 +58,11 @@ body#draw div.resize-helper {
   text-align: center;
 }
 
-.player-notation #player-1 {
+#player-1:not(.player-2,.player-1 #player-1) {
   color: var(--green);
 }
 
-.player-notation #player-2 {
+#player-2:not(.player-2,.player-1 #player-2){
   color: var(--red);
 }
 

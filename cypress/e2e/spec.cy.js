@@ -1,3 +1,11 @@
+Cypress.Commands.add('joinAsPlayer', (uid) => {
+  cy.visit('http://localhost:3000');
+  cy.log(uid);
+  cy.window().its('sessionStorage').invoke('setItem', 'uid', uid);
+  cy.wait(1000);
+  cy.reload();
+});
+
 describe('visiting /', () => {
   let p1 = 0;
   let p2 = 0;
@@ -23,22 +31,33 @@ describe('visiting /', () => {
   });
 
   it('can make a move as player 1', () => {
-    cy.visit('http://localhost:3000');
-    cy.window().its('sessionStorage').invoke('setItem', 'uid', p1);
-    cy.reload();
+    cy.joinAsPlayer(p1);
     cy.get('#player-1').should('contain', 'player 1');
     cy.get('#square-0').click();
     cy.get('#square-0').should('have.class', 'player-1');
   });
 
   it('cant move twice in a row', () => {
-    cy.visit('http://localhost:3000');
-    cy.window().its('sessionStorage').invoke('setItem', 'uid', p1);
-    cy.reload();
+    cy.joinAsPlayer(p1);
     cy.get('#player-1').should('contain', 'player 1');
     cy.get('#square-0').click();
     cy.get('#square-0').should('have.class', 'player-1');
     cy.get('#square-1').click();
     cy.get('#square-1').should('not.have.class', 'player-1');
+  });
+
+  it('doesnt allow player 2 to click already clicked square', () => {
+    cy.joinAsPlayer(p2);
+    cy.get('#player-2').should('contain', 'player 2');
+    cy.get('#square-0').click();
+    cy.get('#square-0').should('have.class', 'player-1');
+    cy.get('#square-0').should('not.have.class', 'player-2');
+  });
+
+  it('allows player 2 to click anything else', () => {
+    cy.joinAsPlayer(p2);
+    cy.get('#player-2').should('contain', 'player 2');
+    cy.get('#square-1').click();
+    cy.get('#square-1').should('have.class', 'player-2');
   });
 });

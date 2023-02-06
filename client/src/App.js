@@ -25,9 +25,7 @@ function App() {
       setPlayer(data.player);
     })
     socket.on('move', (data) => {
-      console.log(data)
       if (data.finished) {
-        console.log(gameWrapper.current)
         gameWrapper.current.classList.add(`player-${data.whoWon}`)
       }
       setTurn(data.turn);

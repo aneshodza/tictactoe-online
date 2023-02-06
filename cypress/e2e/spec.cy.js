@@ -31,14 +31,14 @@ describe('visiting /', () => {
   });
 
   it('can make a move as player 1', () => {
-    cy.joinAsPlayer(p1);
+    cy.joinAsPlayer('p1');
     cy.get('#player-1').should('contain', 'player 1');
     cy.get('#square-0').click();
     cy.get('#square-0').should('have.class', 'player-1');
   });
 
   it('cant move twice in a row', () => {
-    cy.joinAsPlayer(p1);
+    cy.joinAsPlayer('p1');
     cy.get('#player-1').should('contain', 'player 1');
     cy.get('#square-0').click();
     cy.get('#square-0').should('have.class', 'player-1');
@@ -47,7 +47,7 @@ describe('visiting /', () => {
   });
 
   it('doesnt allow player 2 to click already clicked square', () => {
-    cy.joinAsPlayer(p2);
+    cy.joinAsPlayer('p2');
     cy.get('#player-2').should('contain', 'player 2');
     cy.get('#square-0').click();
     cy.get('#square-0').should('have.class', 'player-1');
@@ -55,9 +55,24 @@ describe('visiting /', () => {
   });
 
   it('allows player 2 to click anything else', () => {
-    cy.joinAsPlayer(p2);
+    cy.joinAsPlayer('p2');
     cy.get('#player-2').should('contain', 'player 2');
     cy.get('#square-1').click();
     cy.get('#square-1').should('have.class', 'player-2');
   });
+
+//   it('should allow p1 to win', () => {
+//     cy.joinAsPlayer('p1');
+//     cy.get('#player-1').should('contain', 'player 1');
+//     cy.get('#square-0').should('have.class', 'player-1');
+//     cy.get('#square-3').click();
+//     cy.get('#square-3').should('have.class', 'player-1');
+//     cy.joinAsPlayer('p2');
+//     cy.get('#square-2').click();
+//     cy.get('#square-2').should('have.class', 'player-2');
+//     cy.joinAsPlayer('p1');
+//     cy.get('#square-6').click();
+//     cy.get('#square-6').should('have.class', 'player-1');
+//     cy.get('body').should('have.id', 'player-1');
+//   });
 });
